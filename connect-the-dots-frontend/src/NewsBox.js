@@ -6,7 +6,7 @@ class Feed extends Component {
         return (
             <div className="Feed">
                 <Col md={2}>
-                    <Thumbnail src="/assets/img/logo-sueddeutsche-zeitung.png" alt="Sueddeutsche Zeitung">
+                    <Thumbnail src="/assets/img/logo-sueddeutsche-zeitung.png">
                         <h3>HeadLine</h3>
                         <p>text</p>
                     </Thumbnail>
