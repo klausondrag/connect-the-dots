@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Thumbnail, Col} from "react-bootstrap";
 
-class Feed extends Component {
+class NewsBox extends Component {
     render() {
         return (
-            <div className="Feed">
+            <div className="NewsBox">
                 <Col md={2}>
-                    <Thumbnail src="/assets/img/logo-sueddeutsche-zeitung.png">
-                        <h3>HeadLine</h3>
-                        <p>text</p>
+                    <Thumbnail src={this.props.logo}>
+                        <h3>{this.props.headline}</h3>
+                        <p>{this.props.excerpt}</p>
                     </Thumbnail>
                 </Col>
             </div>
@@ -16,4 +16,4 @@ class Feed extends Component {
     }
 }
 
-export default Feed;
+export default NewsBox;

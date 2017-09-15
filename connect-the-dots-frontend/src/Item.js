@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import NewsBox from "./NewsBox";
 
-class Feed extends Component {
-    constructor(state) {
-        super(state);
-        this.props = {
-            items: [
+class Item extends Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            news: [
                 {
                     logo: "/assets/img/logo-sueddeutsche-zeitung.png",
                     headline: "headline",
@@ -42,11 +42,15 @@ class Feed extends Component {
 
     render() {
         return (
-            <div className="Feed">
-                <NewsBox/>
+            <div className="Item">
+                {this.state.news.map(mapNewsBox)}
             </div>
         );
+
+        function mapNewsBox(news) {
+            return <NewsBox logo={news.logo} headline={news.headline} excerpt={news.excerpt}/>;
+        }
     }
 }
 
-export default Feed;
+export default Item;
