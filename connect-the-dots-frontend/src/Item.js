@@ -3,49 +3,11 @@ import NewsBox from "./NewsBox";
 import {Panel} from "react-bootstrap";
 
 class Item extends Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            news: [
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-                {
-                    logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                    headline: "headline",
-                    excerpt: "text",
-                },
-            ]
-        }
-    }
-
     render() {
         return (
             <div className="Item">
                 <Panel>
-                    {this.state.news.map(mapNewsBox)}
+                    {this.props.news.map(mapNewsBox)}
                 </Panel>
             </div>
         );
