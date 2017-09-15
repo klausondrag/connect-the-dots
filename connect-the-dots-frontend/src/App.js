@@ -7,7 +7,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navbar>
+                <Navbar inverse>
                     <Navbar.Header>
                         <Navbar.Brand>
                             <a href="/#">Connect the Dots</a>
