@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import NewsBox from "./NewsBox";
+import {Panel} from "react-bootstrap";
 
 class Item extends Component {
     constructor(props, context) {
@@ -43,7 +44,9 @@ class Item extends Component {
     render() {
         return (
             <div className="Item">
-                {this.state.news.map(mapNewsBox)}
+                <Panel>
+                    {this.state.news.map(mapNewsBox)}
+                </Panel>
             </div>
         );
 
