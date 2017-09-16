@@ -1,0 +1,20 @@
+.NewsBox{
+    color: unset;
+}
+
+.NewsBox:hover {
+    text-decoration: none !important;
+}
+
+.NewsBox:hover div{
+    background-color: lightgray;
+}
+
+.news-box-col {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.news-box-panel {
+    margin-bottom: 10px !important;
+}

@@ -1,22 +1,25 @@
 import React, {Component} from 'react';
-import {Panel, Media, Label} from "react-bootstrap";
+import {Label, Media, Panel} from "react-bootstrap";
+import "./NewsBox.css";
 
 class NewsBox extends Component {
     render() {
         return (
-            <div className="NewsBox">
+            <a className="NewsBox" href={this.props.article.article_url}>
                 <Panel className="news-box-panel">
                     <Media md={6}>
                         <Media.Left>
-                            <img width={64} height={64} src={this.props.news.image_url} alt="Image"/>
+                            <Label bsStyle="default">{this.props.article.name}</Label>
+                            <hr/>
+                            <img width={64} height={64} src={this.props.article.image_url} alt="Image"/>
                         </Media.Left>
                         <Media.Body>
-                            <Media.Heading>{this.props.news.headline}</Media.Heading>
-                            <p><Label bsStyle="default">{this.props.news.source}</Label> {this.props.news.excerpt}</p>
+                            <Media.Heading>{this.props.article.headline}</Media.Heading>
+                            <p> {this.props.article.excerpt}</p>
                         </Media.Body>
                     </Media>
                 </Panel>
-            </div>
+            </a>
         );
     }
 }
