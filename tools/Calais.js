@@ -32,7 +32,8 @@ function collectInfo(result) {
             if (p === "doc" || !result[p]._type) continue;
             if (!dic[result[p]._type]) dic[result[p]._type] = [];
             let {name, relevance} = result[p];
-            dic[result[p]._type].push([name, relevance]);
+            if (name && relevance)
+                dic[result[p]._type].push([name, relevance]);
         }
     }
     console.log(dic);
