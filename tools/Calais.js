@@ -25,12 +25,10 @@ function submitInfoRequest(inputData) {
 
 submitInfoRequest(getInputData1()).then(collectInfo)
     .then(dic1 => {
-        console.log("dic1:", dic1);
         submitInfoRequest(getInputData2()).then(collectInfo)
             .then(dic2 => {
+                console.log("dic1:", dic1);
                 console.log("dic2:", dic2);
-
-
             })
     });
 
