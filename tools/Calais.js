@@ -23,8 +23,16 @@ function submitInfoRequest(inputData) {
     });
 }
 
-submitInfoRequest(getInputData()).then(collectInfo)
-    .then(dic => console.log(dic));
+submitInfoRequest(getInputData1()).then(collectInfo)
+    .then(dic1 => {
+        console.log("dic1:", dic1);
+        submitInfoRequest(getInputData2()).then(collectInfo)
+            .then(dic2 => {
+                console.log("dic2:", dic2);
+
+
+            })
+    });
 
 function collectInfo(result) {
     let dic = {};
@@ -42,7 +50,7 @@ function collectInfo(result) {
 }
 
 
-function getInputData() {
+function getInputData1() {
     return "North Korea says seeking military 'equilibrium' with U.S.\n" +
         "\n" +
         "SEOUL/UNITED NATIONS (Reuters) - North Korea said on Saturday it aims to reach an “equilibrium” of military force with the United States, which earlier signalled its patience for diplomacy is wearing thin after Pyongyang fired a missile over Japan for the second time in under a month.\n" +
@@ -109,4 +117,54 @@ function getInputData() {
         "South Korean President Moon Jae-in also said dialogue with the North was impossible at this point. He ordered officials to analyse and prepare for possible new North Korean threats, including electromagnetic pulse and biochemical attacks.\n" +
         "\n" +
         "The United States and South Korea are technically still at war with North Korea because the 1950-53 Korean conflict ended with a truce and not a peace treaty. The North accuses the United States, which has 28,500 troops in South Korea, of planning to invade and regularly threatens to destroy it and its Asian allies.";
+}
+
+function getInputData2() {
+    return "Detectives hunting for the Parsons Green bomber have arrested an 18-year-old man in the port of Dover, Kent.\n" +
+        "\n" +
+        "Investigators believe the suspect may have been in the port area of Dover to try and board a ferry to leave Britain, the Guardian has learned.\n" +
+        "\n" +
+        "Islamic State is believed to have identified security at Dover and on ferries as weak, and the group have previously used the port to get people in and out of Britain.\n" +
+        "\n" +
+        "Police described the arrest as significant, and there was confidence among counter-terrorism officials that finding and detaining the suspect represented a major breakthrough in the investigation.\n" +
+        "\n" +
+        "The Metropolitan police said Kent police had arrested the man in the port area of Dover on Saturday morning under section 41 of the Terrorism Act. The law allows a police officer to arrest someone whom they reasonably suspect to be a terrorist.\n" +
+        "\n" +
+        "The man was taken to a local police station and will be driven under guard to a south London police station.\n" +
+        "\n" +
+        "The arrest came 24 hours after a homemade bomb partially exploded at Parson Green tube station in west London, injuring 29 people. The attack during Friday’s morning rush hour led to Britain’s terrorism threat level being raised to its maximum for fear a further attack could be imminent.\n" +
+        "\n" +
+        "Police and security services believe the improvised explosive device (IED) that partially detonated at about 8.20am on Friday was intended to kill. \n" +
+        "\n" +
+        "It was detonated by a timer, but unlike in previous bombings, the timing device was not a mobile phone. The IED at Parsons Green contained fairy lights, which may have been used as an initiator that was meant to set off the main explosive charge.\n" +
+        "\n" +
+        "The UK’s terrorism threat level is being reviewed “hour by hour” as developments in the investigation unfold, sources say. The Joint Terrorism Analysis Centre’s decision to raise the threat level to its highest level was based on fears that whoever was behind the attack, and the materials used to make the device, were unaccounted for.\n" +
+        "\n" +
+        "The JTAC will now assess whether the Dover arrest alleviates these concerns. .\n" +
+        "\n" +
+        "Deputy assistant commissioner Neil Basu, the senior national co-ordinator for counter-terrorism policing, said: “We have made a significant arrest in our investigation this morning. Although we are pleased with the progress made, this investigation continues and the threat level remains at critical.\n" +
+        "\n" +
+        "“The public should remain vigilant as our staff, officers and partners continue to work through this complex investigation. We are not, at this time, changing our protective security measures and the steps taken to free up extra armed officers remain in place.\n" +
+        "\n" +
+        "“This arrest will lead to more activity from our officers. For strong investigative reasons we will not give any more details on the man we arrested at this stage.”\n" +
+        "\n" +
+        "The motivation for the attack on morning rush hour commuters is believed by counter-terrorism investigators to be jihadi.Isis has claimed responsibility, but they have done so after other attacks that they had nothing to do with.\n" +
+        "\n" +
+        "Saturday morning’s arrest is significant, but investigators are keeping an open mind as to whether anyone else was involved in placing the bomb on the tube train at Parsons Green, or helping to make it.\n" +
+        "\n" +
+        "Investigations will continue and questions about whether there were other conspirators will be put to the Dover detainee.\n" +
+        "\n" +
+        "Detectives will also scour reams of CCTV footage they have secured from before and after the attack in an effort to track the movements of those they suspect of involvement.\n" +
+        "\n" +
+        "Any computer and phone owned by a suspect will be examined and the remnants of the IED may also provide forensic clues.\n" +
+        "\n" +
+        "Parsons Green station reopened in the early hours of Saturday, shortly after the terror threat was raised to its highest level.\n" +
+        "\n" +
+        "It is the second time this year the country has been placed on critical alert. The other occasion was after the Manchester Arena bombing that killed 22 people in May.\n" +
+        "\n" +
+        "Authorities have said the number of people hurt on Friday could have been much higher, with the potential for fatalities and life-threatening injuries, had the bomb, which was concealed within a supermarket carrier bag, fully exploded.\n" +
+        "\n" +
+        "It is not yet known whether the device, which was reportedly fitted with a timer, went off at its intended target.\n" +
+        "\n" +
+        "The train, which was bound for Edgware Road, was pulling into the station in south-west London when the bomb detonated in the rear carriage, sending passengers fleeing for safety.";
 }
