@@ -49,7 +49,7 @@ function computeScore(dic1, dic2) {
         }
     }
     if (scores.length <= 0) {
-        return 0;
+        return -1;
     }
     else return 1.0 - scores.reduce((s1, s2) => s1 + s2) / scores.length;
 }
@@ -60,7 +60,7 @@ function match(t1, t2) {
     if (!t1 || t1.length <= 0 || !t2 || t2.length <= 0) {
         //console.log("t1:", t1)
         //console.log("t2:", t2)
-        return Promise.resolve(0);
+        return Promise.resolve(-1);
     }
 
     return submitInfoRequest(t1).then(i => collectInfo(i))
