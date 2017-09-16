@@ -31,7 +31,8 @@ function collectInfo(result) {
         if (result.hasOwnProperty(p)) {
             if (p === "doc") continue;
             if (!dic[result[p]._type]) dic[result[p]._type] = [];
-            dic[result[p]._type].push(result[p]);
+            let {name, relevance} = result[p];
+            dic[result[p]._type].push([name, relevance]);
         }
     }
     console.log(dic);
