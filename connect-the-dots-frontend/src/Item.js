@@ -6,17 +6,15 @@ class Item extends Component {
     render() {
         return (
             <div className="Item">
-                <Panel>
-                    {this.props.news.map(mapNewsBox)}
-                </Panel>
+                {this.props.news.map(mapNewsBox)}
             </div>
         );
 
         function mapNewsBox(news) {
             return (
-            <Col md={6}>
-                <NewsBox news={news}/>
-            </Col>
+                <Col md={6} className="news-box-col">
+                    <NewsBox news={news}/>
+                </Col>
             );
         }
     }
