@@ -9,13 +9,14 @@ class NewsBox extends Component {
                 <Panel className="news-box-panel">
                     <Media md={6}>
                         <Media.Left>
-                            <Label bsStyle="default">{this.props.article.name}</Label>
-                            <hr/>
-                            <img width={64} height={64} src={this.props.article.image_url} alt="Image"/>
+                            <div className="newsbox-cropper">
+                                <img height={140} src={this.props.article.image_url} alt="Image"/>
+                            </div>
                         </Media.Left>
                         <Media.Body>
                             <Media.Heading>{this.props.article.headline}</Media.Heading>
                             <p> {this.props.article.excerpt}</p>
+                            <Label bsStyle="default">{this.props.article.display_name}</Label>
                         </Media.Body>
                     </Media>
                 </Panel>
