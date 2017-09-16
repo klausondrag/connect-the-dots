@@ -26,8 +26,13 @@ CREATE TABLE matching (
   FOREIGN KEY (article_id) REFERENCES article (article_id)
 );
 
--- select a.headline, a.excerpt, a.image_url, c.name
--- from article a
---   inner join company c
---     on c.source_id = a.source_id
--- ;
+DROP TABLE IF EXISTS similarities;
+CREATE TABLE similarities (
+  article_id_1 INTEGER NOT NULL,
+  article_id_2 INTEGER NOT NULL,
+  permid       INTEGER NOT NULL,
+  sklearn      INTEGER NOT NULL,
+  PRIMARY KEY (article_id_1, article_id_2),
+  FOREIGN KEY (article_id_1) REFERENCES article (article_id),
+  FOREIGN KEY (article_id_2) REFERENCES article (article_id)
+);
