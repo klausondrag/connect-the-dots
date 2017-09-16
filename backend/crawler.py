@@ -47,71 +47,45 @@ def get_articles(name, config, get_text):
     article_tuples = [article(a['title'], a['description'], '', a['urlToImage'], a['url']) for a in articles]
 
     # for each article get the text and add it to the array
-    article_tuples_full = [article(t.headline, t.excerpt, get_text(t.article_url),
+    article_tuples_full = [article(t.headline, t.excerpt, get_text(get_soup(t.article_url)),
                                    t.image_url, t.article_url)
                            for t in article_tuples]
     print('First parsed article headline: {}'.format(article_tuples_full[0].headline))
     return article_tuples_full
 
 
-def get_text_daily_mail(a_url: str) -> str:
+def get_soup(url):
     print('.', end='')
-    response = get_response(a_url)
+    response = get_response(url)
     data = response.content.decode('utf-8')
     soup = BeautifulSoup(data, 'lxml')
+    return soup
 
-    body = soup.find('div', {'itemprop': 'articleBody'})
+
+def get_text_generic(soup, element, prop, child, is_recursive=True) -> str:
+    body = soup.find(element, prop)
     if body is not None:
-        text = body.find_all('p', recursive=False)
+        text = body.find_all(child, recursive=is_recursive)
         text = [t.text for t in text]
         return '\n'.join(text)
     else:
         return ''
 
 
-def get_text_reuters(a_url: str) -> str:
-    print('.', end='')
-    response = get_response(a_url)
-    data = response.content.decode('utf-8')
-    soup = BeautifulSoup(data, 'lxml')
-
-    body = soup.find('div', {'class': 'ArticleBody_body_2ECha'})
-    if body is not None:
-        text = body.find_all('p')
-        text = [t.text for t in text]
-        return '\n'.join(text)
-    else:
-        return ''
+def get_text_daily_mail(soup) -> str:
+    return get_text_generic(soup, 'div', {'itemprop': 'articleBody'}, 'p', False)
 
 
-def get_text_the_guardian_uk(a_url: str) -> str:
-    print('.', end='')
-    response = get_response(a_url)
-    data = response.content.decode('utf-8')
-    soup = BeautifulSoup(data, 'lxml')
-
-    body = soup.find('div', {'itemprop': 'articleBody'})
-    if body is not None:
-        text = body.find_all('p')
-        text = [t.text for t in text]
-        return '\n'.join(text)
-    else:
-        return ''
+def get_text_reuters(soup) -> str:
+    return get_text_generic(soup, 'div', {'class': 'ArticleBody_body_2ECha'}, 'p')
 
 
-def get_text_independent(a_url: str) -> str:
-    print('.', end='')
-    response = get_response(a_url)
-    data = response.content.decode('utf-8')
-    soup = BeautifulSoup(data, 'lxml')
+def get_text_the_guardian_uk(soup) -> str:
+    return get_text_generic(soup, 'div', {'itemprop': 'articleBody'}, 'p')
 
-    body = soup.find('div', {'itemprop': 'articleBody'})
-    if body is not None:
-        text = body.find_all('p', recursive=False)
-        text = [t.text for t in text]
-        return '\n'.join(text)
-    else:
-        return ''
+
+def get_text_independent(soup) -> str:
+    return get_text_generic(soup, 'div', {'itemprop': 'articleBody'}, 'p', False)
 
 
 def print_db_stats(cur):
