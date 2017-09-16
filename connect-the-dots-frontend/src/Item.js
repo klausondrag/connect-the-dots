@@ -15,7 +15,7 @@ class Item extends Component {
         function mapNewsBox(news) {
             return (
             <Col md={6}>
-                <NewsBox logo={news.logo} headline={news.headline} excerpt={news.excerpt}/>
+                <NewsBox news={news}/>
             </Col>
             );
         }
