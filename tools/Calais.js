@@ -23,20 +23,22 @@ function submitInfoRequest(inputData) {
     });
 }
 
-submitInfoRequest(getInputData()).then(collectInfo);
+submitInfoRequest(getInputData()).then(collectInfo)
+    .then(dic => console.log(dic));
 
 function collectInfo(result) {
     let dic = {};
     for (let p in result) {
         if (result.hasOwnProperty(p)) {
             if (p === "doc" || !result[p]._type) continue;
-            if (!dic[result[p]._type]) dic[result[p]._type] = [];
             let {name, relevance} = result[p];
-            if (name && relevance)
+            if (name && relevance) {
+                if (!dic[result[p]._type]) dic[result[p]._type] = [];
                 dic[result[p]._type].push([name, relevance]);
+            }
         }
     }
-    console.log(dic);
+    return dic;
 }
 
 
