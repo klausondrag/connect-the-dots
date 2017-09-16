@@ -30,7 +30,7 @@ def get_response(url: str) -> str:
         raise e
 
 
-def get_articles(name, config):
+def get_articles(name, config, get_text):
     api_key = config['newsApiKey']
     url = 'https://newsapi.org/v1/articles?source={name}&sortBy=top&apiKey={api_key}'
     article = namedtuple('article', ['headline', 'excerpt', 'full_text', 'image_url', 'article_url'])
@@ -47,19 +47,60 @@ def get_articles(name, config):
     article_tuples = [article(a['title'], a['description'], '', a['urlToImage'], a['url']) for a in articles]
 
     # for each article get the text and add it to the array
-    article_tuples_full = []
-    for t in article_tuples:
-        text = get_article_text(t.article_url)
-        article_tuples_full.append(article(t.headline, t.excerpt, text, t.image_url, t.article_url))
-
-    article_tuples_full = [article(t.headline, t.excerpt, get_article_text(t.article_url),
+    article_tuples_full = [article(t.headline, t.excerpt, get_text(t.article_url),
                                    t.image_url, t.article_url)
                            for t in article_tuples]
     print('First parsed article headline: {}'.format(article_tuples_full[0].headline))
     return article_tuples_full
 
 
-def get_article_text(a_url: str) -> str:
+def get_text_daily_mail(a_url: str) -> str:
+    print('.', end='')
+    response = get_response(a_url)
+    data = response.content.decode('utf-8')
+    soup = BeautifulSoup(data, 'lxml')
+
+    body = soup.find('div', {'itemprop': 'articleBody'})
+    if body is not None:
+        text = body.find_all('p', recursive=False)
+        text = [t.text for t in text]
+        return '\n'.join(text)
+    else:
+        return ''
+
+
+def get_text_reuters(a_url: str) -> str:
+    print('.', end='')
+    response = get_response(a_url)
+    data = response.content.decode('utf-8')
+    soup = BeautifulSoup(data, 'lxml')
+
+    body = soup.find('div', {'class': 'ArticleBody_body_2ECha'})
+    if body is not None:
+        text = body.find_all('p')
+        text = [t.text for t in text]
+        return '\n'.join(text)
+    else:
+        return ''
+
+
+def get_text_the_guardian_uk(a_url: str) -> str:
+    print('.', end='')
+    response = get_response(a_url)
+    data = response.content.decode('utf-8')
+    soup = BeautifulSoup(data, 'lxml')
+
+    body = soup.find('div', {'itemprop': 'articleBody'})
+    if body is not None:
+        text = body.find_all('p')
+        text = [t.text for t in text]
+        return '\n'.join(text)
+    else:
+        return ''
+
+
+def get_text_independent(a_url: str) -> str:
+    print('.', end='')
     response = get_response(a_url)
     data = response.content.decode('utf-8')
     soup = BeautifulSoup(data, 'lxml')
@@ -113,9 +154,9 @@ def insert_in_db(name, articles, db_file):
         print_db_stats(cur)
 
 
-def crawl_newspaper(name, config, db_file):
+def crawl_newspaper(name, config, db_file, get_text):
     print('Handling {}...'.format(name))
-    articles = get_articles(name, config)
+    articles = get_articles(name, config, get_text)
     insert_in_db(name, articles, db_file)
 
 
@@ -126,8 +167,11 @@ def main():
     sql_file = path_data / 'create_tables.sql'
 
     create_tables(db_file, sql_file)
-    newspapers = ['daily-mail', 'the-guardian-uk', 'reuters', 'independent']
-    [crawl_newspaper(n, config, db_file) for n in newspapers]
+    newspapers = [('daily-mail', get_text_daily_mail),
+                  ('the-guardian-uk', get_text_the_guardian_uk),
+                  ('reuters', get_text_reuters),
+                  ('independent', get_text_independent)]
+    [crawl_newspaper(n, config, db_file, m) for n, m in newspapers]
     print('Done')
 
 
