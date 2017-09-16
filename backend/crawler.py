@@ -105,6 +105,7 @@ def insert_in_db(name, articles, db_file):
 
         print_db_stats(cur)
         articles = _filter_articles(articles, cur)
+        print('Inserting {} new articles'.format(len(articles)))
         [_insert_article(cur, a, company_id) for a in articles]
         con.commit()
 
@@ -137,13 +138,18 @@ def _get_company_id(con, cur, name):
         else:
             raise Exception('?')
         con.commit()
+    else:
+        company_id = company_id[0]
     return company_id
 
 
 def crawl_newspaper(name, config, db_file, get_text):
     print('Handling {}...'.format(name))
-    articles = get_articles(name, config, get_text)
-    insert_in_db(name, articles, db_file)
+    try:
+        articles = get_articles(name, config, get_text)
+        insert_in_db(name, articles, db_file)
+    except:
+        pass
 
 
 def main():
