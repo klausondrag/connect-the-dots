@@ -1,0 +1,135 @@
+import sqlite3
+from pathlib import Path
+from collections import namedtuple
+
+import requests
+from bs4 import BeautifulSoup
+
+from secrets.config import config
+
+
+def create_tables(db_file, sql_file):
+    with sqlite3.connect(str(db_file)) as con:
+        with open(sql_file, 'r') as f:
+            script = f.read()
+        con.executescript(script)
+        con.commit()
+        cur = con.cursor()
+        cur.execute('SELECT count(*) FROM article')
+        print(cur.fetchone()[0])
+
+
+def get_response(url: str) -> str:
+    try:
+        response = requests.get(url)
+        if response.ok:
+            return response
+        else:
+            raise Exception('invalid response code', response)
+    except Exception as e:
+        raise e
+
+
+def get_articles(name, config):
+    api_key = config['newsApiKey']
+    url = 'https://newsapi.org/v1/articles?source={name}&sortBy=top&apiKey={api_key}'
+    article = namedtuple('article', ['headline', 'excerpt', 'full_text', 'image_url', 'article_url'])
+
+    url = url.format(name=name, api_key=api_key)
+
+    response = get_response(url)
+
+    j = response.json()
+    articles = j['articles']
+    print('Articles found: {}'.format(len(j['articles'])))
+    print('First article: {}'.format(articles[0]))
+
+    article_tuples = [article(a['title'], a['description'], '', a['urlToImage'], a['url']) for a in articles]
+
+    # for each article get the text and add it to the array
+    article_tuples_full = []
+    for t in article_tuples:
+        text = get_article_text(t.article_url)
+        article_tuples_full.append(article(t.headline, t.excerpt, text, t.image_url, t.article_url))
+
+    article_tuples_full = [article(t.headline, t.excerpt, get_article_text(t.article_url),
+                                   t.image_url, t.article_url)
+                           for t in article_tuples]
+    print('First parsed article headline: {}'.format(article_tuples_full[0].headline))
+    return article_tuples_full
+
+
+def get_article_text(a_url: str) -> str:
+    response = get_response(a_url)
+    data = response.content.decode('utf-8')
+    soup = BeautifulSoup(data, 'lxml')
+
+    body = soup.find('div', {'itemprop': 'articleBody'})
+    if body is not None:
+        text = body.find_all('p', recursive=False)
+        text = [t.text for t in text]
+        return '\n'.join(text)
+    else:
+        return ''
+
+
+def print_db_stats(cur):
+    cur.execute("SELECT count(*) FROM company")
+    print('Companies in db: {}'.format(cur.fetchone()[0]))
+    cur.execute("SELECT count(*) FROM article")
+    print('Articles in db: {}'.format(cur.fetchone()[0]))
+
+
+def insert_in_db(name, articles, db_file):
+    with sqlite3.connect(str(db_file)) as con:
+        cur = con.cursor()
+
+        print_db_stats(cur)
+
+        cur.execute(f'SELECT source_id FROM company WHERE name = ?', (name,))
+        x = cur.fetchone()
+        if x and len(x) > 0:
+            cur.execute(f'DELETE FROM article WHERE source_id = ?', (x[0],))
+
+        cur.execute(f'DELETE FROM company WHERE name = ?', (name,))
+        cur.execute(f'INSERT INTO company (name) VALUES (?)', (name,))
+        cur.execute(f'SELECT source_id FROM company WHERE name = ?', (name,))
+        x = cur.fetchone()
+        if x and len(x) > 0:
+            company_id = x[0]
+        else:
+            raise Exception('?')
+        con.commit()
+
+        print_db_stats(cur)
+
+        # "article", ["headline", "excerpt", "full_text", "image_url", "article_url"]
+        for a in articles:
+            cur.execute(('INSERT INTO article (source_id, headline, excerpt, image_url, article_url, full_text)' +
+                         'VALUES (?, ?, ?, ?, ?, ?)'),
+                        (company_id, a.headline, a.excerpt, a.image_url, a.article_url, a.full_text))
+        con.commit()
+
+        print_db_stats(cur)
+
+
+def crawl_newspaper(name, config, db_file):
+    print('Handling {}...'.format(name))
+    articles = get_articles(name, config)
+    insert_in_db(name, articles, db_file)
+
+
+def main():
+    path_data = Path('sql')
+    path_data.mkdir(exist_ok=True)
+    db_file = path_data / 'db.sqlite'
+    sql_file = path_data / 'create_tables.sql'
+
+    create_tables(db_file, sql_file)
+    newspapers = ['daily-mail', 'the-guardian-uk', 'reuters', 'independent']
+    [crawl_newspaper(n, config, db_file) for n in newspapers]
+    print('Done')
+
+
+if __name__ == '__main__':
+    main()
