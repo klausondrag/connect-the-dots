@@ -47,7 +47,6 @@ app.listen(app.get("port"), () => {
 });
 
 const calais = require("./tools/Calais");
-
 function getAllCandidates() {
     return knex.raw("Select * " +
         "From article a " +
@@ -59,7 +58,7 @@ function getAllCandidates() {
         "  And permid = 0" +
         "  )")
         .then(match)
-        .catch(err => console.error(err))
+        .catch(err => console.error(err));
 
     function match(a) {
         for (let i = 0; i < a.length; i++) {
@@ -71,5 +70,4 @@ function getAllCandidates() {
         }
     }
 }
-
 getAllCandidates();

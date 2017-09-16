@@ -52,3 +52,13 @@ CREATE TABLE similarities (
 --       WHERE s.article_id_1 == a1.article_id
 --             AND s.article_id_2 == a2.article_id
 --   );
+
+-- Select *
+-- From article a
+-- where exists (
+--   select *
+--   from similarities s
+--   where (s.article_id_1 = a.article_id
+--   	or  s.article_id_2 = a.article_id)
+--   	And permid = 0
+--   )
