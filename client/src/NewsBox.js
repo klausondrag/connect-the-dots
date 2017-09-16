@@ -4,7 +4,7 @@ import {Panel, Media, Label} from "react-bootstrap";
 class NewsBox extends Component {
     render() {
         return (
-            <a className="NewsBox" href={this.props.news.article_url}>
+            <a className="NewsBox" href={this.props.news.article_url} style={{color: "unset"}}>
                 <Panel className="news-box-panel">
                     <Media md={6}>
                         <Media.Left>
