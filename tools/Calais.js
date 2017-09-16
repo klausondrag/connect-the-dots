@@ -48,15 +48,30 @@ function computeScore(dic1, dic2) {
             scores.push(computePropertyScore(dic1[d], dic2[d]));
         }
     }
-    return 1.0 - scores.reduce((s1, s2) => s1 + s2) / scores.length;
+    if (scores.length <= 0) {
+        return 0;
+    }
+    else return 1.0 - scores.reduce((s1, s2) => s1 + s2) / scores.length;
 }
 
-submitInfoRequest(getInputData1()).then(collectInfo)
-    .then(dic1 => {
-        submitInfoRequest(getInputData2()).then(collectInfo)
-            .then(dic2 => computeScore(dic1, dic2))
-            .then(s => console.log(s))
-    });
+module.exports = match;
+
+function match(t1, t2) {
+    if (!t1 || t1.length <= 0 || !t2 || t2.length <= 0) {
+        //console.log("t1:", t1)
+        //console.log("t2:", t2)
+        return Promise.resolve(0);
+    }
+
+    return submitInfoRequest(t1).then(i => collectInfo(i))
+        .then(dic1 => {
+            submitInfoRequest(t2).then(i => collectInfo(i))
+                .then(dic2 => computeScore(dic1, dic2))
+                .then(s => console.log(s))
+        })
+        .catch(err => console.error(err));
+};
+match(getInputData1(), getInputData2());
 
 function collectInfo(result) {
     let dic = {};
