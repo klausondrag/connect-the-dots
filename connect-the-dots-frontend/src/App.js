@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Feed from "./Feed";
+import Footer from "./Footer";
 import './App.css';
 import {Navbar} from "react-bootstrap";
 
@@ -15,6 +16,7 @@ class App extends Component {
                     </Navbar.Header>
                 </Navbar>
                 <Feed/>
+                <Footer/>
             </div>
         );
     }
