@@ -23,6 +23,8 @@ class Feed extends Component {
 
         this.getFeed().then(feed => {
                 feed.forEach(f => {
+                    var reuters_idx = -1;
+
                     for (var i = 0; i < f.length; i++) {
 
                         // Set display_name attribute
@@ -47,6 +49,16 @@ class Feed extends Component {
                         if (f[i].headline.length > 75) {
                             f[i].headline = f[i].headline.substring(0, 74) + "...";
                         }
+
+                        if (f[i].name === "reuters") {
+                            reuters_idx = i;
+                        }
+                    }
+
+                    if (reuters_idx !== -1) {
+                        var item = f[reuters_idx];
+                        f.splice(reuters_idx, 1);
+                        f.unshift(item);
                     }
                 });
 
