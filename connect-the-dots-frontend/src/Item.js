@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NewsBox from "./NewsBox";
-import {Panel} from "react-bootstrap";
+import {Panel,Col} from "react-bootstrap";
 
 class Item extends Component {
     render() {
@@ -13,7 +13,11 @@ class Item extends Component {
         );
 
         function mapNewsBox(news) {
-            return <NewsBox logo={news.logo} headline={news.headline} excerpt={news.excerpt}/>;
+            return (
+            <Col md={6}>
+                <NewsBox logo={news.logo} headline={news.headline} excerpt={news.excerpt}/>
+            </Col>
+            );
         }
     }
 }
