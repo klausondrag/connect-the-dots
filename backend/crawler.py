@@ -50,7 +50,8 @@ def get_articles(name, config, get_text):
     article_tuples_full = [article(t.headline, t.excerpt, get_text(get_soup(t.article_url)),
                                    t.image_url, t.article_url)
                            for t in article_tuples]
-    print('\nFirst parsed article headline: {}'.format(article_tuples_full[0].headline))
+    print()
+    # print('First parsed article headline: {}'.format(article_tuples_full[0].headline))
     return article_tuples_full
 
 
