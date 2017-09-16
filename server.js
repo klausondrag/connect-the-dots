@@ -9,7 +9,18 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get("/api", (req, res) => {
-
+    let item = {
+        source: "Fox News",
+        image_url: "/assets/img/london.jpg",
+        headline: "headline",
+        excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur massa quis aliquam blandit. Pellentesque quis lectus felis. Praesent consequat libero ac lobortis tincidunt. Sed ut tortor nec sapien dignissim varius ut ut est."
+    };
+    let news = [
+        item, item, item, item,
+    ];
+    res.json([
+        news, news, news
+    ]);
 });
 
 app.listen(app.get("port"), () => {
