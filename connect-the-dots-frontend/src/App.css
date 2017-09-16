@@ -1,3 +1,42 @@
+/* New styles */
+
+.items-list {
+  list-style-type: none;
+}
+
+.items-list li {
+  padding-top: 50px;
+  padding-bottom: 45px;
+  margin: 2px 0;
+  border-bottom: 3px dashed black;
+  overflow: hidden;
+}
+
+.items-list li:first-child {
+  padding-top: 0;
+}
+
+.items-list li:last-child {
+  border-bottom: none;
+}
+
+.news-box-col {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.news-box-panel {
+  margin-bottom: 10px !important;
+}
+
+/* Overwrite styles */
+
+.panel {
+  border-radius: 0;
+}
+
+/* Predefined */
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
