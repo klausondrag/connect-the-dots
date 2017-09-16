@@ -12,7 +12,7 @@ class NewsBox extends Component {
                         </Media.Left>
                         <Media.Body>
                             <Media.Heading>{this.props.news.headline}</Media.Heading>
-                            <p><Label bsStyle="default">{this.props.news.source}</Label> {this.props.news.excerpt}</p>
+                            <p><Label bsStyle="default">{this.props.news.name}</Label> {this.props.news.excerpt}</p>
                         </Media.Body>
                     </Media>
                 </Panel>
