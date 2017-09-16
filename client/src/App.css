@@ -1,5 +1,10 @@
 /* New styles */
 
+#header-logo {
+  height: 40px;
+  padding-top: 8px;
+}
+
 .items-list {
   list-style-type: none;
 }
