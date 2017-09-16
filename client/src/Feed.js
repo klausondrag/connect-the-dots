@@ -10,6 +10,7 @@ class Feed extends Component {
     }
 
     updateFeed() {
+        if(this.state.feed.length <= 0)
         this.getFeed().then(feed =>
             this.setState({
                 feed: feed
