@@ -4,37 +4,13 @@ import Item from "./Item";
 class Feed extends Component {
     constructor(props, context) {
         super(props, context);
+        let item = {
+            logo: "/assets/img/logo-sueddeutsche-zeitung.png",
+            headline: "headline",
+            excerpt: "text text text text text text text text text text text text text text text text text text text text text text text text text text ",
+        };
         let news = [
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
-            {
-                logo: "/assets/img/logo-sueddeutsche-zeitung.png",
-                headline: "headline",
-                excerpt: "text",
-            },
+            item, item, item, item,
         ];
         this.state = {
             feed: [
