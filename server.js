@@ -11,13 +11,24 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
+let oldOut = [];
 app.get("/api", (req, res) => {
+    function rotate(array) {
+        let o = array.shift();
+        if (o) array.push(o);
+        return array;
+    }
+
     let objectToArray = function (dic) {
         let out = [];
         console.log(dic);
         for(let i in dic)
             out.push(dic[i]);
-        return out;
+
+        if (oldOut.length >= out.length)
+            rotate(oldOut);
+        else oldOut = out;
+        return oldOut;
     };
     knex.raw("select group_id, headline, excerpt, image_url, name, article_url from (SELECT * FROM  matching inner join article a on matching.article_id = a.article_id) m inner join company c on c.source_id = m.source_id")
         .then(n => {
