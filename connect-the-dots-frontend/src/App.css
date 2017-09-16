@@ -17,6 +17,7 @@
 }
 
 .items-list li:last-child {
+  padding-bottom: 0;
   border-bottom: none;
 }
 
@@ -27,6 +28,12 @@
 
 .news-box-panel {
   margin-bottom: 10px !important;
+}
+
+footer {
+  padding: 25px;
+  color: grey;
+  text-align: center;
 }
 
 /* Overwrite styles */
