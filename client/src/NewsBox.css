@@ -1,6 +1,11 @@
 .NewsBox{
     color: unset;
 }
+
 .NewsBox:hover {
     text-decoration: none !important;
+}
+
+.NewsBox:hover div{
+    background-color: lightgray;
 }
