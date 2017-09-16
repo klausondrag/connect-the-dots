@@ -26,6 +26,11 @@
   border-bottom: none;
 }
 
+.newsbox-cropper {
+  width: 140px;
+  overflow: hidden;
+}
+
 footer {
   padding: 25px;
   color: grey;

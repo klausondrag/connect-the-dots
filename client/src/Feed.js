@@ -10,11 +10,45 @@ class Feed extends Component {
     }
 
     updateFeed() {
-        if(this.state.feed.length <= 0)
-        this.getFeed().then(feed =>
-            this.setState({
-                feed: feed
-            })
+        var name_mappings = [
+            {name: "daily-mail", display_name: "Daily Mail"},
+            {name: "the-guardian-uk", display_name: "The Guardian"},
+            {name: "independent", display_name: "The Independent"},
+            {name: "reuters", display_name: "Reuters"}
+        ];
+
+        if (this.state.feed.length > 0) {
+            return;
+        }
+
+        this.getFeed().then(feed => {
+                feed.forEach(f => {
+                    for (var i = 0; i < f.length; i++) {
+
+                        // Set display_name attribute
+                        for (var j = 0; j < name_mappings.length; j++) {
+                            if (name_mappings[j].name == f[i].name) {
+                                f[i].display_name = name_mappings[j].display_name;
+                            }
+                        }
+                        if (!f[i].display_name) {
+                            f[i].display_name = f[i].name;
+                        }
+
+                        // Limit excerpt length
+                        console.log(f[i]);
+                        if (f[i].headline.length <= 42 && f[i].excerpt.length > 220) {
+                            f[i].excerpt = f[i].excerpt.substring(0, 219) + "...";
+                        } else if (f[i].headline.length > 42 && f[i].excerpt.length > 142) {
+                            f[i].excerpt = f[i].excerpt.substring(0, 141) + "...";
+                        }
+                    }
+                });
+
+                this.setState({
+                    feed: feed
+                });
+            }
         )
     }
 
