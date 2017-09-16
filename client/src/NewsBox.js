@@ -10,7 +10,7 @@ class NewsBox extends Component {
                     <Media md={6}>
                         <Media.Left>
                             <div className="newsbox-cropper">
-                                <img height={140} src={this.props.article.image_url} alt="Image"/>
+                                <img height={140} src={this.props.article.image_url} alt=""/>
                             </div>
                         </Media.Left>
                         <Media.Body>
