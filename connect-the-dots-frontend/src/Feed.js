@@ -24,9 +24,11 @@ class Feed extends Component {
         return (
             <div className="Feed">
                 <div className="container">
-                    {this.state.feed.map(news =>
-                        <Item news={news}/>
-                    )}
+                    <ul className="items-list">
+                        {this.state.feed.map(news =>
+                            <li> <Item news={news}/> </li>
+                        )}
+                    </ul>
                 </div>
             </div>
         );
