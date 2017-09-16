@@ -4,7 +4,7 @@ import {Panel, Media, Label} from "react-bootstrap";
 class NewsBox extends Component {
     render() {
         return (
-            <div className="NewsBox">
+            <a className="NewsBox" href={this.props.news.article_url}>
                 <Panel className="news-box-panel">
                     <Media md={6}>
                         <Media.Left>
@@ -16,7 +16,7 @@ class NewsBox extends Component {
                         </Media.Body>
                     </Media>
                 </Panel>
-            </div>
+            </a>
         );
     }
 }
