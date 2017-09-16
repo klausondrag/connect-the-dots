@@ -36,3 +36,19 @@ CREATE TABLE similarities (
   FOREIGN KEY (article_id_1) REFERENCES article (article_id),
   FOREIGN KEY (article_id_2) REFERENCES article (article_id)
 );
+--
+-- INSERT INTO similarities (article_id_1, article_id_2, permid, sklearn)
+--   SELECT
+--     a1.article_id,
+--     a2.article_id,
+--     0,
+--     0
+--   FROM article a1
+--     INNER JOIN article a2
+--       ON a1.article_id != a2.article_id
+--   WHERE NOT EXISTS(
+--       SELECT *
+--       FROM similarities s
+--       WHERE s.article_id_1 == a1.article_id
+--             AND s.article_id_2 == a2.article_id
+--   );
