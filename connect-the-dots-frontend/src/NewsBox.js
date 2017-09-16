@@ -5,7 +5,7 @@ class NewsBox extends Component {
     render() {
         return (
             <div className="NewsBox">
-                <Col md={2}>
+                <Col md={6}>
                     <Thumbnail src={this.props.logo}>
                         <h3>{this.props.headline}</h3>
                         <p>{this.props.excerpt}</p>
