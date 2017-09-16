@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+const Knex = require('knex');
+const knex = Knex(require('./knexfile'));
+
 app.set("port", process.env.PORT || 3001);
 
 // Express only serves static assets in production
@@ -18,6 +21,14 @@ app.get("/api", (req, res) => {
     let news = [
         item, item, item, item,
     ];
+
+    knex.raw("select a.headline, a.excerpt, a.image_url, c.name " +
+        "from article a " +
+        "join company c " +
+        "on c.source_id = a.source_id")
+        .then(n => console.log(n))
+        .catch(err => console.error(err));
+
     res.json([
         news, news, news
     ]);

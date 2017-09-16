@@ -21,4 +21,4 @@ let knexfile = {
         }
     }
 };
-module.exports = knexfile[env];
+module.exports = knexfile[process.env.NODE_ENV || "development"];
