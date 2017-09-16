@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NewsBox from "./NewsBox";
-import {Panel,Col} from "react-bootstrap";
+import {Col} from "react-bootstrap";
 
 class Item extends Component {
     render() {
@@ -10,10 +10,10 @@ class Item extends Component {
             </div>
         );
 
-        function mapNewsBox(news) {
+        function mapNewsBox(article) {
             return (
                 <Col md={6} className="news-box-col">
-                    <NewsBox news={news}/>
+                    <NewsBox article={article}/>
                 </Col>
             );
         }
