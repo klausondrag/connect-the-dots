@@ -5,9 +5,10 @@ class NewsBox extends Component {
     render() {
         return (
             <div className="NewsBox">
-                    <Thumbnail src={this.props.logo}>
-                        <h3>{this.props.headline}</h3>
-                        <p>{this.props.excerpt}</p>
+                    <Thumbnail src={this.props.news.image}>
+                        <h3>{this.props.news.headline}</h3>
+                        <code>{this.props.news.source}</code>
+                        <p>{this.props.news.excerpt}</p>
                     </Thumbnail>
             </div>
         );
