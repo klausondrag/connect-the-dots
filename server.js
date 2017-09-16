@@ -12,11 +12,22 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get("/api", (req, res) => {
-    knex.raw("select a.headline, a.excerpt, a.image_url, c.name " +
-        "from article a " +
-        "join company c " +
-        "on c.source_id = a.source_id")
-        .then(n => res.json(n))
+    let objectToArray = function (dic) {
+        let out = [];
+        console.log(dic);
+        for(let i in dic)
+            out.push(dic[i]);
+        return out;
+    };
+    knex.raw("select group_id, headline, excerpt, image_url, name, article_url from (SELECT * FROM  matching inner join article a on matching.article_id = a.article_id) m inner join company c on c.source_id = m.source_id")
+        .then(n => {
+            let dic = {};
+            n.forEach(i=> {
+                if (!dic[i.group_id]) dic[i.group_id]= [];
+                return dic[i.group_id].push(i);
+            });
+            return res.json(objectToArray(dic));
+        })
         .catch(err => console.error(err));
 });
 
