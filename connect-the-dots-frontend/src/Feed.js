@@ -6,9 +6,9 @@ class Feed extends Component {
         super(props, context);
         let item = {
             source: "Fox News",
-            image: "/assets/img/logo-sueddeutsche-zeitung.png",
+            image_url: "/assets/img/london.jpg",
             headline: "headline",
-            excerpt: "text text text text text text text text text text text text text text text text text text text text text text text text text text ",
+            excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur massa quis aliquam blandit. Pellentesque quis lectus felis. Praesent consequat libero ac lobortis tincidunt. Sed ut tortor nec sapien dignissim varius ut ut est."
         };
         let news = [
             item, item, item, item,
