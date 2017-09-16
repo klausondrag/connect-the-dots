@@ -1,10 +1,9 @@
-const request = require('request')
+const request = require('request');
 
-var token = process.env.CALAIS_TOKEN;
+const token = require('./keys.json').CALAIS_TOKEN;
 
 function submitInfoRequest(inputData) {
     return new Promise((resolve, reject) => {
-        console.log(token)
         request({
                 method: 'POST',
                 dataType: "text",
@@ -29,7 +28,7 @@ submitInfoRequest(getInputData()).then(collectInfo);
 function collectInfo(result) {
     // console.log(result);
     let dic = {};
-    for (var property in result) {
+    for (let property in result) {
         if (result.hasOwnProperty(property)) {
             if (property === "doc") continue;
 //            console.log("p:", property, result[property]);
