@@ -50,7 +50,7 @@ def get_articles(name, config, get_text):
     article_tuples_full = [article(t.headline, t.excerpt, get_text(get_soup(t.article_url)),
                                    t.image_url, t.article_url)
                            for t in article_tuples]
-    print('First parsed article headline: {}'.format(article_tuples_full[0].headline))
+    print('\nFirst parsed article headline: {}'.format(article_tuples_full[0].headline))
     return article_tuples_full
 
 
@@ -100,32 +100,43 @@ def insert_in_db(name, articles, db_file):
         cur = con.cursor()
 
         print_db_stats(cur)
+        company_id = _get_company_id(con, cur, name)
 
-        cur.execute(f'SELECT source_id FROM company WHERE name = ?', (name,))
-        x = cur.fetchone()
-        if x and len(x) > 0:
-            cur.execute(f'DELETE FROM article WHERE source_id = ?', (x[0],))
+        print_db_stats(cur)
+        articles = _filter_articles(articles, cur)
+        [_insert_article(cur, a, company_id) for a in articles]
+        con.commit()
 
-        cur.execute(f'DELETE FROM company WHERE name = ?', (name,))
+        print_db_stats(cur)
+
+
+def _insert_article(cur, a, company_id):
+    cur.execute(('INSERT INTO article (source_id, headline, excerpt, image_url, article_url, full_text)' +
+                 'VALUES (?, ?, ?, ?, ?, ?)'),
+                (company_id, a.headline, a.excerpt, a.image_url, a.article_url, a.full_text))
+
+
+def _filter_articles(articles, cur):
+    cur.execute('SELECT article_url FROM article')
+    existing_urls = cur.fetchall()
+    existing_urls = [eu[0] for eu in existing_urls]
+    articles = [a for a in articles if a.article_url not in existing_urls]
+    return articles
+
+
+def _get_company_id(con, cur, name):
+    cur.execute(f'SELECT source_id FROM company WHERE name = ?', (name,))
+    company_id = cur.fetchone()
+    if company_id is None or len(company_id) == 0:
         cur.execute(f'INSERT INTO company (name) VALUES (?)', (name,))
         cur.execute(f'SELECT source_id FROM company WHERE name = ?', (name,))
-        x = cur.fetchone()
-        if x and len(x) > 0:
-            company_id = x[0]
+        company_id = cur.fetchone()
+        if company_id and len(company_id) > 0:
+            company_id = company_id[0]
         else:
             raise Exception('?')
         con.commit()
-
-        print_db_stats(cur)
-
-        # "article", ["headline", "excerpt", "full_text", "image_url", "article_url"]
-        for a in articles:
-            cur.execute(('INSERT INTO article (source_id, headline, excerpt, image_url, article_url, full_text)' +
-                         'VALUES (?, ?, ?, ?, ?, ?)'),
-                        (company_id, a.headline, a.excerpt, a.image_url, a.article_url, a.full_text))
-        con.commit()
-
-        print_db_stats(cur)
+    return company_id
 
 
 def crawl_newspaper(name, config, db_file, get_text):
@@ -140,7 +151,7 @@ def main():
     db_file = path_data / 'db.sqlite'
     sql_file = path_data / 'create_tables.sql'
 
-    create_tables(db_file, sql_file)
+    # create_tables(db_file, sql_file)
     newspapers = [('daily-mail', get_text_daily_mail),
                   ('the-guardian-uk', get_text_the_guardian_uk),
                   ('reuters', get_text_reuters),
