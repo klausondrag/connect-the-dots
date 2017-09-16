@@ -1,6 +1,6 @@
 .NewsBox{
     color: unset;
 }
-a:hover, a:focus {
+.NewsBox:hover {
     text-decoration: none !important;
 }
