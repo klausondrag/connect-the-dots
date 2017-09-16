@@ -26,13 +26,12 @@ function submitInfoRequest(inputData) {
 submitInfoRequest(getInputData()).then(collectInfo);
 
 function collectInfo(result) {
-    // console.log(result);
     let dic = {};
-    for (let property in result) {
-        if (result.hasOwnProperty(property)) {
-            if (property === "doc") continue;
-//            console.log("p:", property, result[property]);
-            dic[result[property]._type] = "exists";
+    for (let p in result) {
+        if (result.hasOwnProperty(p)) {
+            if (p === "doc") continue;
+            if (!dic[result[p]._type]) dic[result[p]._type] = [];
+            dic[result[p]._type].push(result[p]);
         }
     }
     console.log(dic);
