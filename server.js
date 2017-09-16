@@ -12,26 +12,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get("/api", (req, res) => {
-    let item = {
-        source: "Fox News",
-        image_url: "/assets/img/london.jpg",
-        headline: "headline",
-        excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur massa quis aliquam blandit. Pellentesque quis lectus felis. Praesent consequat libero ac lobortis tincidunt. Sed ut tortor nec sapien dignissim varius ut ut est."
-    };
-    let news = [
-        item, item, item, item,
-    ];
-
     knex.raw("select a.headline, a.excerpt, a.image_url, c.name " +
         "from article a " +
         "join company c " +
         "on c.source_id = a.source_id")
-        .then(n => console.log(n))
+        .then(n => res.json(n))
         .catch(err => console.error(err));
-
-    res.json([
-        news, news, news
-    ]);
 });
 
 app.listen(app.get("port"), () => {
