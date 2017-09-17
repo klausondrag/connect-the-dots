@@ -23,11 +23,13 @@ class Feed extends Component {
 
         this.getFeed().then(feed => {
                 feed.forEach(f => {
+                    var reuters_idx = -1;
+
                     for (var i = 0; i < f.length; i++) {
 
                         // Set display_name attribute
                         for (var j = 0; j < name_mappings.length; j++) {
-                            if (name_mappings[j].name == f[i].name) {
+                            if (name_mappings[j].name === f[i].name) {
                                 f[i].display_name = name_mappings[j].display_name;
                             }
                         }
@@ -42,6 +44,21 @@ class Feed extends Component {
                         } else if (f[i].headline.length > 42 && f[i].excerpt.length > 142) {
                             f[i].excerpt = f[i].excerpt.substring(0, 141) + "...";
                         }
+
+                        // Limit headline length
+                        if (f[i].headline.length > 75) {
+                            f[i].headline = f[i].headline.substring(0, 74) + "...";
+                        }
+
+                        if (f[i].name === "reuters") {
+                            reuters_idx = i;
+                        }
+                    }
+
+                    if (reuters_idx !== -1) {
+                        var item = f[reuters_idx];
+                        f.splice(reuters_idx, 1);
+                        f.unshift(item);
                     }
                 });
 

@@ -13,7 +13,7 @@
   padding-top: 50px;
   padding-bottom: 45px;
   margin: 2px 0;
-  border-bottom: 3px dashed black;
+  border-bottom: 5px inset grey;
   overflow: hidden;
 }
 
@@ -29,6 +29,13 @@
 .newsbox-cropper {
   width: 140px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newsbox-reuters .label-default {
+  background-color: #ff8000;
 }
 
 footer {

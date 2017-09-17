@@ -5,7 +5,7 @@ class Footer extends Component {
         return (
             <footer>
                 <p>
-                    Connect the dots &copy; 2017
+                    Connect the Dots &copy; 2017
                 </p>
             </footer>
         );

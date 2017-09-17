@@ -32,6 +32,10 @@ CREATE TABLE similarities (
   article_id_2 INTEGER NOT NULL,
   permid       INTEGER NOT NULL,
   sklearn      INTEGER NOT NULL,
+  sklearn1     INTEGER NOT NULL,
+  sklearn2     INTEGER NOT NULL,
+  sklearn3     INTEGER NOT NULL,
+  sklearn4     INTEGER NOT NULL,
   PRIMARY KEY (article_id_1, article_id_2),
   FOREIGN KEY (article_id_1) REFERENCES article (article_id),
   FOREIGN KEY (article_id_2) REFERENCES article (article_id)
