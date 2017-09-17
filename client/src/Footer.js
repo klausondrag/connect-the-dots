@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <footer>
-                <p>
+                <p className="header-text">
                     Connect the Dots &copy; 2017
                 </p>
             </footer>

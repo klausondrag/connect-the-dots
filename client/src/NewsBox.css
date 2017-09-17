@@ -1,5 +1,9 @@
-.NewsBox{
+.NewsBox {
     color: unset;
+}
+
+.NewsBox .serif-font {
+    font-family: 'Libre Baskerville', serif;
 }
 
 .NewsBox:hover {
@@ -19,7 +23,24 @@
     margin-bottom: 10px !important;
 }
 
+.news-box-spacing {
+    height: 115px;
+}
+
 .relevance {
-    color: #ff8000 !important;
     float: right;
+    font-style: italic;
+    font-family: 'Karla', sans-serif;
+}
+
+.relevance-low {
+    color: darkred;
+}
+
+.relevance-med {
+    color: #6a0b8d;
+}
+
+.relevance-high {
+    color: dodgerblue;
 }

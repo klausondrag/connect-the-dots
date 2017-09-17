@@ -14,7 +14,8 @@ class Feed extends Component {
             {name: "daily-mail", display_name: "Daily Mail"},
             {name: "the-guardian-uk", display_name: "The Guardian"},
             {name: "independent", display_name: "The Independent"},
-            {name: "reuters", display_name: "Reuters"}
+            {name: "reuters", display_name: "Reuters"},
+            {name: "bbc-news", display_name: "BBC News"}
         ];
 
         if (this.state.feed.length > 0) {
@@ -39,15 +40,15 @@ class Feed extends Component {
 
                         // Limit excerpt length
                         console.log(f[i]);
-                        if (f[i].headline.length <= 42 && f[i].excerpt.length > 220) {
-                            f[i].excerpt = f[i].excerpt.substring(0, 219) + "...";
-                        } else if (f[i].headline.length > 42 && f[i].excerpt.length > 142) {
-                            f[i].excerpt = f[i].excerpt.substring(0, 141) + "...";
+                        if (f[i].headline.length <= 32 && f[i].excerpt.length > 180) {
+                            f[i].excerpt = f[i].excerpt.substring(0, 179) + "...";
+                        } else if (f[i].headline.length > 32 && f[i].excerpt.length > 125) {
+                            f[i].excerpt = f[i].excerpt.substring(0, 124) + "...";
                         }
 
                         // Limit headline length
-                        if (f[i].headline.length > 75) {
-                            f[i].headline = f[i].headline.substring(0, 74) + "...";
+                        if (f[i].headline.length > 70) {
+                            f[i].headline = f[i].headline.substring(0, 64) + "...";
                         }
 
                         if (f[i].name === "reuters") {

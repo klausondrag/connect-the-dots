@@ -11,18 +11,18 @@ class App extends Component {
                 <Navbar>
                     <Navbar.Header style={{padding: "0 0 0 4%"}}>
                         <Navbar.Brand>
-                            <a href="/#">Connect the Dots</a>
+                            <a className="header-text" href="/#">Connect the Dots</a>
                         </Navbar.Brand>
 
                         <img src="/assets/img/logo.png" id="header-logo" alt=""/>
                     </Navbar.Header>
 
                     <Nav>
-                        <NavItem>News aggregation and matching engine</NavItem>
+                        <NavItem className="header-text">News aggregation and matching engine</NavItem>
                     </Nav>
 
                     <Nav pullRight>
-                        <NavItem>Last updated on {this.getDate()}</NavItem>
+                        <NavItem className="header-text">Last updated on {this.getDate()}</NavItem>
                     </Nav>
                 </Navbar>
                 <Feed/>
@@ -39,6 +39,10 @@ class App extends Component {
             hour -= Math.round(Math.random() * d.getHours());
         }
         minutes -= Math.round(Math.random() * d.getMinutes());
+
+        if (minutes.toString().length == 1) {
+            minutes = "0" + minutes;
+        }
 
         return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ", " +
             hour + ":" + minutes;
