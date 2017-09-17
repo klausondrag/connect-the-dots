@@ -30,12 +30,12 @@ def get_response(url: str) -> str:
         raise e
 
 
-def get_articles(name, config, get_text):
+def get_articles(name, config, get_text, sort_by):
     api_key = config['newsApiKey']
-    url = 'https://newsapi.org/v1/articles?source={name}&sortBy=top&apiKey={api_key}'
+    url = 'https://newsapi.org/v1/articles?source={name}&sortBy={sort_by}&apiKey={api_key}'
     article = namedtuple('article', ['headline', 'excerpt', 'full_text', 'image_url', 'article_url'])
 
-    url = url.format(name=name, api_key=api_key)
+    url = url.format(name=name, api_key=api_key, sort_by=sort_by)
 
     response = get_response(url)
 
@@ -87,6 +87,10 @@ def get_text_the_guardian_uk(soup) -> str:
 
 def get_text_independent(soup) -> str:
     return get_text_generic(soup, 'div', {'itemprop': 'articleBody'}, 'p', False)
+
+
+def get_text_bbc_news(soup) -> str:
+    return get_text_generic(soup, 'div', {'property': 'articleBody'}, 'p')
 
 
 def print_db_stats(cur):
@@ -143,10 +147,10 @@ def _get_company_id(con, cur, name):
     return company_id
 
 
-def crawl_newspaper(name, config, db_file, get_text):
+def crawl_newspaper(name, config, db_file, get_text, sort_by):
     print('Handling {}...'.format(name))
     try:
-        articles = get_articles(name, config, get_text)
+        articles = get_articles(name, config, get_text, sort_by)
         insert_in_db(name, articles, db_file)
     except:
         pass
@@ -162,8 +166,12 @@ def main():
     newspapers = [('daily-mail', get_text_daily_mail),
                   ('the-guardian-uk', get_text_the_guardian_uk),
                   ('reuters', get_text_reuters),
-                  ('independent', get_text_independent)]
-    [crawl_newspaper(n, config, db_file, m) for n, m in newspapers]
+                  ('independent', get_text_independent),
+                  ('cnn', get_text_the_guardian_uk),
+                  ('bbc-news', get_text_bbc_news)]
+    [crawl_newspaper(n, config, db_file, m, sb)
+     for n, m in newspapers
+     for sb in ['top', 'latest', 'popular']]
     print('Done')
 
 
