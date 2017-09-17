@@ -31,7 +31,7 @@ app.get("/api", (req, res) => {
         return oldOut;
     };
 
-    var match = "matching";
+    var match = "matching1";
 
     knex.raw("select group_id, headline, excerpt, image_url, name, article_url, similarity from (SELECT * FROM  " + match +
         " inner join article a on " + match + ".article_id = a.article_id) m inner join company c on c.source_id = m.source_id")
