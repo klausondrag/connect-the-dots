@@ -19,11 +19,19 @@ class NewsBox extends Component {
                                 <p> {this.props.article.excerpt}</p>
                             </a>
                             <Label bsStyle="default">{this.props.article.display_name}</Label>
+                            {this.relevance(this.props.article.display_name)}
                         </Media.Body>
                     </Media>
                 </Panel>
             </div>
         );
+    }
+
+    relevance(source) {
+        if (source === "Reuters")
+            return "";
+        else
+            return <span className="relevance label">{Math.random() * 100}</span>;
     }
 
     getClass(source) {
