@@ -70,4 +70,5 @@ function getAllCandidates() {
         }
     }
 }
-getAllCandidates();
+
+//getAllCandidates();
