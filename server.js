@@ -45,3 +45,30 @@ app.get("/api", (req, res) => {
 app.listen(app.get("port"), () => {
     console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
 });
+
+const calais = require("./tools/Calais");
+function getAllCandidates() {
+    return knex.raw("Select * " +
+        "From article a " +
+        "where exists (" +
+        "  select *" +
+        "  from similarities s" +
+        "  where (s.article_id_1 = a.article_id" +
+        "  or  s.article_id_2 = a.article_id)" +
+        "  And permid = 0" +
+        "  )")
+        .then(match)
+        .catch(err => console.error(err));
+
+    function match(a) {
+        for (let i = 0; i < a.length; i++) {
+            for (let j = 0; j < i; j++) {
+                let t1 = a[i].full_text;
+                let t2 = a[j].full_text;
+                calais(t1, t2);
+            }
+        }
+    }
+}
+
+//getAllCandidates();
