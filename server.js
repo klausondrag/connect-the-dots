@@ -30,7 +30,7 @@ app.get("/api", (req, res) => {
         else oldOut = out;
         return oldOut;
     };
-    knex.raw("select group_id, headline, excerpt, image_url, name, article_url from (SELECT * FROM  matching inner join article a on matching.article_id = a.article_id) m inner join company c on c.source_id = m.source_id")
+    knex.raw("select group_id, headline, excerpt, image_url, name, article_url, similarity from (SELECT * FROM  matching inner join article a on matching.article_id = a.article_id) m inner join company c on c.source_id = m.source_id")
         .then(n => {
             let dic = {};
             n.forEach(i=> {

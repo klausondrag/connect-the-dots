@@ -3,11 +3,11 @@ import {Label, Media, Panel} from "react-bootstrap";
 import "./NewsBox.css";
 
 class NewsBox extends Component {
-    static relevance(source) {
+    relevance(source) {
         if (source === "Reuters")
             return "";
         else {
-            let relevance = 50 + Math.random() * 50;
+            let relevance = this.props.article.similarity * 100;
             return <span className="relevance label">{relevance.toFixed(0)}%</span>;
         }
     }
@@ -36,7 +36,7 @@ class NewsBox extends Component {
                                 <p> {this.props.article.excerpt}</p>
                             </a>
                             <Label bsStyle="default">{this.props.article.display_name}</Label>
-                            {NewsBox.relevance(this.props.article.display_name)}
+                            {this.relevance(this.props.article.display_name)}
                         </Media.Body>
                     </Media>
                 </Panel>
