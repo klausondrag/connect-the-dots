@@ -5,6 +5,10 @@
   padding-top: 8px;
 }
 
+.header-text {
+  font-family: 'Raleway', sans-serif;
+}
+
 .items-list {
   list-style-type: none;
 }
