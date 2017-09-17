@@ -17,6 +17,10 @@ class App extends Component {
                         <img src="/assets/img/logo.png" id="header-logo" alt=""/>
                     </Navbar.Header>
 
+                    <Nav>
+                        <NavItem>News aggregation and matching engine</NavItem>
+                    </Nav>
+
                     <Nav pullRight>
                         <NavItem>Last updated on {this.getDate()}</NavItem>
                     </Nav>
