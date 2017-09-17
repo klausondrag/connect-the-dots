@@ -7,16 +7,8 @@ class NewsBox extends Component {
         if (source === "Reuters")
             return "";
         else {
-            let relevance = this.props.article.similarity * 100;
-            return <span className="relevance label">{relevance.toFixed(0)}%</span>;
-        }
-    }
-
-    static getClass(source) {
-        if (source === "Reuters") {
-            return "newsbox-reuters";
-        } else {
-            return "";
+            let relevance = (this.props.article.similarity * 100).toFixed(0);
+            return <span className={"relevance " + NewsBox.getColorClass(relevance)}>{relevance} % relevance</span>;
         }
     }
 
@@ -31,10 +23,12 @@ class NewsBox extends Component {
                             </div>
                         </Media.Left>
                         <Media.Body>
-                            <a href={this.props.article.article_url} style={{color: "#535353"}}>
-                                <Media.Heading>{this.props.article.headline}</Media.Heading>
-                                <p> {this.props.article.excerpt}</p>
-                            </a>
+                            <div className="news-box-spacing">
+                                <a href={this.props.article.article_url} style={{color: "#535353"}}>
+                                    <Media.Heading className="serif-font">{this.props.article.headline}</Media.Heading>
+                                    <p className="serif-font"> {this.props.article.excerpt}</p>
+                                </a>
+                            </div>
                             <Label bsStyle="default">{this.props.article.display_name}</Label>
                             {this.relevance(this.props.article.display_name)}
                         </Media.Body>
@@ -42,6 +36,24 @@ class NewsBox extends Component {
                 </Panel>
             </div>
         );
+    }
+
+    static getClass(source) {
+        if (source === "Reuters") {
+            return "newsbox-reuters";
+        } else {
+            return "";
+        }
+    }
+
+    static getColorClass(relevance) {
+        if (relevance > 70) {
+            return "relevance-high";
+        } else if (relevance > 50) {
+            return "relevance-med";
+        } else {
+            return "relevance-low";
+        }
     }
 }
 
