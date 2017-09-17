@@ -29,7 +29,15 @@ class App extends Component {
 
     getDate() {
         var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ", " + d.getHours() + ":" + d.getMinutes();
+        var hour = d.getHours();
+        var minutes = d.getMinutes();
+        if (minutes < 30) {
+            hour -= Math.round(Math.random() * d.getHours());
+        }
+        minutes -= Math.round(Math.random() * d.getMinutes());
+
+        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ", " +
+            hour + ":" + minutes;
     }
 }
 
